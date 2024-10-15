@@ -1,18 +1,22 @@
-// src/components/TransactionItem/index.js
 import React from 'react'
 import './index.css'
 
 const TransactionItem = ({transaction, onDelete}) => {
-  const {id, title, amount, type} = transaction
+  const handleDelete = () => {
+    onDelete(transaction.id)
+  }
 
   return (
-    <li key={id} className="transaction-item">
-      <p>{title}</p>
-      <p>{amount}</p>
-      <p>{type}</p>
-      <button type="button" onClick={() => onDelete(id)}>
-        Delete
-      </button>
+    <li className="transaction-item">
+      <p>Title: {transaction.title}</p>
+      <p>Amount: ${transaction.amount.toFixed(2)}</p>
+      <p>Type: {transaction.type}</p>
+      <img
+        src="https://example.com/delete-image.jpg" // Update with your delete image URL
+        alt="delete"
+        className="delete-icon"
+        onClick={handleDelete}
+      />
     </li>
   )
 }
