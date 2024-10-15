@@ -1,5 +1,5 @@
-// src/components/MoneyManager/index.js
 import React, {useState} from 'react'
+import {v4 as uuidv4} from 'uuid'
 import MoneyDetails from '../MoneyDetails'
 import TransactionItem from '../TransactionItem'
 import './index.css'
@@ -10,7 +10,6 @@ const MoneyManager = () => {
   const [transactionType, setTransactionType] = useState('INCOME')
   const [transactions, setTransactions] = useState([])
 
-  // Calculate total income, expenses, and balance
   const totalIncome = transactions
     .filter(transaction => transaction.type === 'INCOME')
     .reduce((acc, curr) => acc + curr.amount, 0)
@@ -21,41 +20,40 @@ const MoneyManager = () => {
 
   const totalBalance = totalIncome - totalExpenses
 
-  // Add transaction function with correct parsing of the amount
   const addTransaction = event => {
     event.preventDefault()
     const amount = parseFloat(amountInput)
     if (titleInput && amountInput && amount > 0) {
       const newTransaction = {
-        id: Date.now(),
+        id: uuidv4(), // Use uuid for unique ID
         title: titleInput,
         amount: amount,
         type: transactionType,
       }
       setTransactions(prev => [...prev, newTransaction])
-      setTitleInput('')
-      setAmountInput('')
+      setTitleInput('') // Clear title input
+      setAmountInput('') // Clear amount input
+      setTransactionType('INCOME') // Reset transaction type
     }
   }
 
-  // Delete transaction function
   const deleteTransaction = id => {
-    setTransactions(prev => prev.filter(transaction => transaction.id !== id))
+    const filteredTransactions = transactions.filter(
+      transaction => transaction.id !== id,
+    )
+    setTransactions(filteredTransactions)
   }
 
   return (
     <div className="money-manager">
-      {/* Welcome message */}
       <h1>Welcome back to your Money Manager</h1>
 
-      {/* Use MoneyDetails component for balance, income, and expenses */}
       <MoneyDetails
         balanceAmount={totalBalance}
         incomeAmount={totalIncome}
         expensesAmount={totalExpenses}
       />
 
-      {/* Form to add transactions */}
       <form onSubmit={addTransaction}>
         <label htmlFor="titleInput">Title</label>
         <input
@@ -67,12 +65,12 @@ const MoneyManager = () => {
         />
         <label htmlFor="amountInput">Amount</label>
         <input
-  type="text" // This sets the input type to text
-  id="amountInput"
-  value={amountInput} // You should have a state for this
-  onChange={this.handleAmountChange} // Make sure to handle changes in this input
-  placeholder="Enter amount"
-/>
+          id="amountInput"
+          type="text"
+          value={amountInput}
+          onChange={e => setAmountInput(e.target.value)}
+          placeholder="Enter amount"
+        />
 
         <select
           onChange={e => setTransactionType(e.target.value)}
@@ -84,7 +82,8 @@ const MoneyManager = () => {
         <button type="submit">Add</button>
       </form>
 
-      {/* Transaction list */}
+      {/* Render the transaction history */}
+      <h2>History</h2>
       <ul>
         {transactions.length > 0 ? (
           transactions.map(transaction => (
