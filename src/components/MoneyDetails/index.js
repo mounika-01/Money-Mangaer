@@ -1,39 +1,43 @@
-import React from 'react'
+// Write your code here
 import './index.css'
 
-const MoneyDetails = ({balanceAmount, incomeAmount, expensesAmount}) => {
-  const formatCurrency = amount => `$${amount.toFixed(2)}`
+const MoneyDetails = props => {
+  const {balanceAmount, incomeAmount, expensesAmount} = props
 
   return (
-    <div className="money-details">
-      <div className="money-detail">
+    <div className="money-details-container">
+      <div className="balance-container">
         <img
-          src="https://example.com/balance-image.jpg"
+          src="https://assets.ccbp.in/frontend/react-js/money-manager/balance-image.png"
           alt="balance"
-          className="balance-image"
+          className="details-img"
         />
-        <p>Your Balance</p>
-        <p data-testid="balanceAmount">{formatCurrency(balanceAmount)}</p>
+        <div>
+          <p className="details-text">Your Balance</p>
+          <p className="details-money">Rs {balanceAmount}</p>
+        </div>
       </div>
-
-      <div className="money-detail">
+      <div className="income-container">
         <img
-          src="https://example.com/income-image.jpg"
+          src="https://assets.ccbp.in/frontend/react-js/money-manager/income-image.png"
           alt="income"
-          className="income-image"
+          className="details-img"
         />
-        <p>Your Income</p>
-        <p data-testid="incomeAmount">{formatCurrency(incomeAmount)}</p>
+        <div>
+          <p className="details-text">Your Income</p>
+          <p className="details-money">Rs {incomeAmount}</p>
+        </div>
       </div>
-
-      <div className="money-detail">
+      <div className="expenses-container">
         <img
-          src="https://example.com/expenses-image.jpg"
+          src="https://assets.ccbp.in/frontend/react-js/money-manager/expenses-image.png"
           alt="expenses"
-          className="expenses-image"
+          className="details-img"
         />
-        <p>Your Expenses</p>
-        <p data-testid="expensesAmount">{formatCurrency(expensesAmount)}</p>
+        <div>
+          <p className="details-text">Your Expenses</p>
+          <p className="details-money">Rs {expensesAmount}</p>
+        </div>
       </div>
     </div>
   )
