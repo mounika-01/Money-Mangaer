@@ -1,1 +1,7 @@
 /* Write your CSS here */
+.delete-image {
+  cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  margin-left: 10px; /* Spacing from the text */
+}
