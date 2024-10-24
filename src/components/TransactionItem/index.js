@@ -1,33 +1,25 @@
-// Write your code here
+import React from 'react'
 import './index.css'
 
-const TransactionItem = props => {
-  const {transactionDetails, deleteTransaction} = props
+const TransactionItem = ({transactionDetails, deleteTransaction}) => {
   const {id, title, amount, type} = transactionDetails
-
-  const onDeleteTransaction = () => {
-    deleteTransaction(id)
-  }
 
   return (
     <li className="table-row">
-      <p className="transaction-text">{title}</p>
-      <p className="transaction-text">Rs {amount}</p>
-      <p className="transaction-text">{type}</p>
-      <div className="delete-container">
-        <button
-          className="delete-button"
-          type="button"
-          onClick={onDeleteTransaction}
-          //   testid="delete"
-        >
-          <img
-            className="delete-img"
-            src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
-            alt="delete"
-          />
-        </button>
-      </div>
+      <p className="table-cell">{title}</p>
+      <p className="table-cell">Rs {amount}</p>
+      <p className="table-cell">{type}</p>
+      <img
+        data-testid="delete"
+        src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
+        alt="delete"
+        onClick={() => deleteTransaction(id)}
+        onError={e => {
+          e.target.onerror = null // prevents looping
+          e.target.src = 'fallback_image_url' // provide a fallback image URL
+        }}
+        className="delete-image"
+      />
     </li>
   )
 }
